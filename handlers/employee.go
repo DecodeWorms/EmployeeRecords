@@ -71,3 +71,23 @@ func (emp Employee) DeleteEmployee(db *gorm.DB) http.HandlerFunc {
 		controller.DeleteEmployee(db, userParameter)
 	}
 }
+
+func (emp Employee) CompleteInfos(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var userParameter types.Employee
+		json.NewDecoder(r.Body).Decode(&userParameter)
+
+		type result struct {
+			Name       string
+			Gender     string
+			Department string
+			Salary     int
+		}
+
+		var theResult = []result{}
+
+		controller := repository.Employee{}
+		controller.CompleteInfos(db, userParameter).Scan(&theResult)
+		json.NewEncoder(w).Encode(theResult)
+	}
+}

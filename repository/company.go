@@ -37,29 +37,3 @@ func (com Company) DeleteRecord(db *gorm.DB, model types.Company) *gorm.DB {
 	result := db.Where("employee_id = ?", model.EmployeeId).Delete(&model)
 	return result
 }
-
-func (comp Company) EmployeeInfos(db *gorm.DB, model types.Company) *gorm.DB {
-
-	result := db.Model(&types.Company{}).Select("companies.department, companies.salary, employees.name,employees.gender").Joins("left join employees on companies.employee_id = employees.id").Where("companies.employee_id = ?", model.EmployeeId)
-	return result
-
-}
-
-// func (control Controller) Getuserandcard(db *gorm.DB) http.HandlerFunc {
-// 	return func(w http.ResponseWriter, r *http.Request) {
-// 		var theusers usermodel.User
-// 		json.NewDecoder(r.Body).Decode(&theusers)
-
-// 		type result struct {
-// 			Name       string
-// 			Gender     string
-// 			CardType   string
-// 			CardNumber string
-// 		}
-
-// 		var theresults = []result{}
-
-// 		db.Model(&usermodel.User{}).Select("users.name,users.gender,atmcards.card_type,atmcards.card_number").Joins("left join atmcards on users.id = atmcards.user_id").Where("users.id = ?", theusers.ID).Scan(&theresults)
-// 		json.NewEncoder(w).Encode(theresults)
-// 	}
-// }

@@ -4,7 +4,6 @@ import (
 	"employeerecords/repository"
 	"employeerecords/types"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"gorm.io/gorm"
@@ -72,26 +71,5 @@ func (comp Company) DeleteRecord(db *gorm.DB) http.HandlerFunc {
 		controller.DeleteRecord(db, userParameter).Scan(&serverResponse)
 
 		json.NewEncoder(w).Encode(serverResponse)
-	}
-}
-
-func (com Company) EmployeeInfos(db *gorm.DB) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		var userParameter types.Company
-		json.NewDecoder(r.Body).Decode(&userParameter)
-
-		type result struct {
-			Name       string
-			Gender     string
-			Department string
-			Salary     int
-		}
-
-		var serverResponse = []result{}
-
-		controller := repository.Company{}
-		thevalue := controller.EmployeeInfos(db, userParameter).Scan(&serverResponse)
-		fmt.Print(thevalue)
-
 	}
 }

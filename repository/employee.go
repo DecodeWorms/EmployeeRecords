@@ -41,3 +41,9 @@ func (emp Employee) DeleteEmployee(db *gorm.DB, model types.Employee) *gorm.DB {
 	return result
 
 }
+
+func (emp Employee) CompleteInfos(db *gorm.DB, model types.Employee) *gorm.DB {
+
+	result := db.Model(&types.Employee{}).Select("employees.name, employees.gender, companies.department, companies.salary").Joins("left join companies on employees.id = companies.employee_id").Where("employees.id = ?", model.ID)
+	return result
+}
