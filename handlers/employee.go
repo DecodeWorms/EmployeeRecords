@@ -91,3 +91,14 @@ func (emp Employee) CompleteInfos(db *gorm.DB) http.HandlerFunc {
 		json.NewEncoder(w).Encode(theResult)
 	}
 }
+
+func (emp Employee) GetName(db *gorm.DB) http.HandlerFunc {
+	var userParameter types.Employee
+	json.NewDecoder(r.Body).Decode(&userParameter)
+
+	var result types.Employee
+
+	controller := repository.Employee{}
+	controller.GetName(db, userParameter).Scan(&serverResponse)
+	json.NewEncoder(w).Encode(result)
+}

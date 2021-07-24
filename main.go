@@ -26,6 +26,7 @@ func main() {
 	router.HandleFunc("/update", controller.UpdateEmployee(db)).Methods("PUT")
 	router.HandleFunc("/drop", controller.DeleteEmployee(db)).Methods("DELETE")
 	router.HandleFunc("/infos", controller.CompleteInfos(db)).Methods("GET")
+	router.HandleFunc("/getname", controller.GetName(db)).Methods("GET")
 
 	router.HandleFunc("/companysignup", controller2.Create(db)).Methods("POST")
 	router.HandleFunc("/getemployee", controller2.GetEmployee(db)).Methods("GET")

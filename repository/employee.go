@@ -47,3 +47,7 @@ func (emp Employee) CompleteInfos(db *gorm.DB, model types.Employee) *gorm.DB {
 	result := db.Model(&types.Employee{}).Select("employees.name, employees.gender, companies.department, companies.salary").Joins("left join companies on employees.id = companies.employee_id").Where("employees.id = ?", model.ID)
 	return result
 }
+
+func (emp Employee) GetName(db *gorm.DB, model types.Employee) *gorm.DB {
+	return db.Where("name = ?", model.Name).Find(&model)
+}
